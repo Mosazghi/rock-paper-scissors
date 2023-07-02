@@ -1,65 +1,16 @@
 function getComputerChoice() {
-  let choices: string[] = ["ROCK", "PAPER", "SCISSORS"];
+  let choices = ["ROCK", "PAPER", "SCISSORS"];
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
 let pScore = 0;
 let cScore = 0;
 
-function playRound(player: string, computer: string) {
-  console.log("Computer:", computer);
-  console.log("Player:", player);
-  if (player === computer) {
-    return "d";
-  } else if (
-    (player === "ROCK" && computer === "SCISSORS") ||
-    (player === "PAPER" && computer === "ROCK") ||
-    (player === "SCISSORS" && computer === "PAPER")
-  ) {
-    pScore++;
-    return "p";
-  } else {
-    cScore++;
-    return "c";
-  }
+const buttons = document.querySelectorAll(".selection");
 
-  // switch (player) {
-  //   case "ROCK":
-  //     if (computer == "SCISSORS") {
-  //       return "p";
-  //     } else if (computer == "PAPER") {
-  //       return "c";
-  //     } else {
-  //       return "d";
-  //     }
-  //   case "PAPER":
-  //     if (computer == "ROCK") {
-  //       return "p";
-  //     } else if (computer == "SCISSORS") {
-  //       return "c";
-  //     } else {
-  //       return "d";
-  //     }
-  //   case "SCISSORS":
-  //     if (computer == "PAPER") {
-  //       return "p";
-  //     } else if (computer == "ROCK") {
-  //       return "c";
-  //     } else {
-  //       return "d";
-  //     }
-  //   default:
-  //     return "e";
-  // }
-}
-
-const buttons = document.querySelectorAll(
-  ".selection"
-) as NodeListOf<HTMLButtonElement>;
-
-const playerScore = document.querySelector("#player") as HTMLSpanElement;
-const computerScore = document.querySelector("#computer") as HTMLSpanElement;
-const winnerText = document.querySelector("#winner") as HTMLParagraphElement;
+const playerScore = document.querySelector("#player");
+const computerScore = document.querySelector("#computer");
+const winnerText = document.querySelector("#winner");
 
 let isRoundInProgress = false;
 let gameIsFinished = false;
@@ -90,14 +41,26 @@ buttons.forEach((button) => {
   });
 });
 
-function displayRoundText(
-  round: string,
-  playerChoice: string,
-  computerChoice: string
-) {
-  let roundText = document.querySelector(
-    "#displayRoundWinner"
-  ) as HTMLParagraphElement;
+function playRound(player, computer) {
+  console.log("Computer:", computer);
+  console.log("Player:", player);
+  if (player === computer) {
+    return "d";
+  } else if (
+    (player === "ROCK" && computer === "SCISSORS") ||
+    (player === "PAPER" && computer === "ROCK") ||
+    (player === "SCISSORS" && computer === "PAPER")
+  ) {
+    pScore++;
+    return "p";
+  } else {
+    cScore++;
+    return "c";
+  }
+}
+
+function displayRoundText(round, playerChoice, computerChoice) {
+  let roundText = document.querySelector("#displayRoundWinner");
 
   round === "p" || round === "c"
     ? round === "p"
@@ -114,7 +77,7 @@ function resetGame() {
   pScore > cScore
     ? (winnerText.innerHTML = "You win the game!")
     : (winnerText.innerHTML = "You lose the game!");
-  let resetButton = document.getElementById("reset") as HTMLButtonElement;
+  let resetButton = document.getElementById("reset");
   resetButton.hidden = false;
   resetButton.addEventListener("click", () => {
     gameIsFinished = false;
