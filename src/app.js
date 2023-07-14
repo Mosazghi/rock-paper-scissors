@@ -1,19 +1,18 @@
-function getComputerChoice() {
-  let choices = ["ROCK", "PAPER", "SCISSORS"];
-  return choices[Math.floor(Math.random() * choices.length)];
-}
-
 let pScore = 0;
 let cScore = 0;
 
 const buttons = document.querySelectorAll(".selection");
-
 const playerScore = document.querySelector("#player");
 const computerScore = document.querySelector("#computer");
 const winnerText = document.querySelector("#winner");
+const playerTxt = document.querySelector("#pTxt");
+const computerTxt = document.querySelector("#cTxt");
 
 let isRoundInProgress = false;
 let gameIsFinished = false;
+let playerChoice;
+let computerChoice;
+let round;
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -23,9 +22,12 @@ buttons.forEach((button) => {
 
     isRoundInProgress = true;
 
-    let playerChoice = button.id;
-    let computerChoice = getComputerChoice();
-    let round = playRound(playerChoice, computerChoice);
+    playerChoice = button.id;
+    computerChoice = getComputerChoice();
+    playerTxt.textContent = playerChoice;
+    computerTxt.textContent = computerChoice;
+
+    round = playRound(playerChoice, computerChoice);
     displayRoundText(round, playerChoice, computerChoice);
 
     playerScore.textContent = pScore.toString();
@@ -37,7 +39,7 @@ buttons.forEach((button) => {
 
     setTimeout(() => {
       isRoundInProgress = false;
-    }, 500);
+    }, 1000);
   });
 });
 
@@ -65,8 +67,8 @@ function displayRoundText(round, playerChoice, computerChoice) {
   round === "p" || round === "c"
     ? round === "p"
       ? (roundText.innerHTML = `You win! 
-      <span style="color: green;">${playerChoice}</span>
-     beats  <span style="color: red;">${computerChoice}</span>!`)
+  <span style="color: green;">${playerChoice}</span>
+  beats  <span style="color: red;">${computerChoice}</span>!`)
       : (roundText.innerHTML = `You lose!  <span style="color: red;">${computerChoice}</span> beats  <span style="color: green;">${playerChoice}</span>!`)
     : (roundText.innerHTML = `It's a draw! <span style="color: gray;">${playerChoice}</span> and <span style="color: gray;">${computerChoice}</span>!`);
 }
@@ -89,4 +91,9 @@ function disableButtons() {
   buttons.forEach((button) => {
     button.disabled = true;
   });
+}
+
+function getComputerChoice() {
+  let choices = ["ROCK", "PAPER", "SCISSORS"];
+  return choices[Math.floor(Math.random() * choices.length)];
 }

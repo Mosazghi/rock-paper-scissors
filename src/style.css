@@ -3,3 +3,18 @@
   font-size: 40px;
   font-weight: bold;
 }
+
+body {
+  background-color: #3f5c68;
+}
+
+footer {
+  margin-top: 50px;
+  text-align: center;
+}
+
+footer > p,
+a > i {
+  font-size: 25px;
+  color: #000000;
+}
